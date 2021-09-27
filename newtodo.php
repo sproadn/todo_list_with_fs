@@ -1,10 +1,13 @@
 <?php
+session_start();
 
+if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
 $todos = json_decode(file_get_contents('./todos.json'), true);
 
+var_dump($_POST); //die();
 if (isset($_POST['todo_name'])){
     $todoName = $_POST['todo_name'];
-    $todos[$todoName] = [
+    $todos[$_SESSION['username']]['todos'][$todoName] = [
         'completed' => false,
         'created_at' => date('d-m-Y H:i:s'),
         'updated_at' => ''
@@ -13,4 +16,7 @@ if (isset($_POST['todo_name'])){
 
 file_put_contents('./todos.json', json_encode($todos, JSON_PRETTY_PRINT));
 
-header('Location: index.php');
+header('Location: todos_list.php');
+} else {
+    header('Location: index.php');
+}

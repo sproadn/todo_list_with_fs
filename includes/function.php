@@ -32,6 +32,9 @@ function register($todos)
         $todos[$username]['password'] = $password;
         $todos[$username]['todos'] = [];
 
+        $_SESSION['is_logged'] = true;
+        $_SESSION['username'] = $username;
+
         return $todos;
     } else {
         $_SESSION['errors'] = $errors;
@@ -39,4 +42,36 @@ function register($todos)
         header("Location: register.php");
     }
 
+}
+
+
+function login($todos){
+    if (empty($_POST['username'])) {
+        $errors['username'] = "Username is required <br>";
+    }
+
+    if (empty($_POST['password'])) {
+        $errors['password'] = "Password is required <br>";
+    }
+
+
+    if (empty($errors)){
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        if (!isset($todos[$username])){
+            $_SESSION['errors'] = "Username or Passord is incorrect ";
+        }
+        if ($todos[$username]['password'] !== $password) {
+            $_SESSION['errors'] = "Username or Passord is incorrect ";
+        }
+        if (!empty($_SESSION['errors'])) header("Location: index.php");
+
+        $_SESSION['is_logged'] = true;
+        $_SESSION['username'] = $username;
+
+    } else {
+        $_SESSION['errors'] = $errors;
+
+        header("Location: index.php");
+    }
 }

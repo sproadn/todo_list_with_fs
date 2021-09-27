@@ -3,15 +3,23 @@ session_start();
 require_once "./includes/function.php";
 
 $todos = json_decode(file_get_contents('./todos.json'), true);
-
 $errors = [];
-if (isset($_POST['register_btn'])){
+
+
+if (isset($_POST['register_btn'])) {
     $todos = register($todos);
-    print(json_encode($todos, JSON_PRETTY_PRINT));
     file_put_contents('./todos.json', json_encode($todos, JSON_PRETTY_PRINT));
-}elseif (isset($_POST['login_btn'])){
 
 }
+if (isset($_POST['login_btn'])) {
+    login($todos);
+}
+
+//var_dump(isset($_SESSION['is_logged']) && isset($_SESSION['username']));
+if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
+
+$userTodos = $todos[$_SESSION['username']]['todos'];
+
 
 ?>
 
@@ -24,13 +32,19 @@ if (isset($_POST['register_btn'])){
   <title>Document</title>
 </head>
 <body>
+    <?php 
+    if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
+        echo "<a href=\"logout.php\">Logout</a>";
+    }
+        
+    ?>
 <div>
   <form action="newtodo.php" method="post">
     <input type="text" name="todo_name" placeholder="Enter your todo">
     <button>New Todo</button>
   </form>
   <br>
-    <?php foreach ($todos as $todoName => $todo): ?>
+    <?php foreach ($userTodos as $todoName => $todo): ?>
       <div style="margin-bottom: 20px;">
         <form style="display: inline" action="change_status.php" method="post">
           <input type="hidden" name="todo_name" value="<?php echo $todoName ?>">
@@ -55,3 +69,8 @@ if (isset($_POST['register_btn'])){
 </script>
 </body>
 </html>
+<?php 
+} else {
+    header("Location: index.php");
+}
+?>
