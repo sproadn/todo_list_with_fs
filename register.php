@@ -1,10 +1,11 @@
 <?php 
 session_start();
 $errors = null;
-if (empty($_SESSION['errors'])) {
+if (!empty($_SESSION['errors'])) {
     $errors = $_SESSION['errors'];
     unset($_SESSION['errors']);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,7 @@ if (empty($_SESSION['errors'])) {
     <main>
         <form action="todos_list.php" method="post">
             <input type="text" name="username" placeholder="Username">
-            <?php if(!empty($errors) and !empty($errors['username'])) echo $errors['username']; ?>
+            <?php if(!empty($errors) and !empty($errors['username_exist'])) echo $errors['username_exist']; ?>
             <br>
             <input type="password" name="password" placeholder="Password">
             <?php if(!empty($errors) and !empty($errors['password'])) echo $errors['password']; ?>
