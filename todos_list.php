@@ -6,16 +6,16 @@ $todos = json_decode(file_get_contents('./todos.json'), true);
 $errors = [];
 
 
-if (isset($_POST['register_btn'])) {
+if (empty($_POST['register_btn'])) {
     $todos = register($todos);
     file_put_contents('./todosb.json', json_encode($todos, JSON_PRETTY_PRINT));
 }
-if (isset($_POST['login_btn'])) {
+if (empty($_POST['login_btn'])) {
     login($todos);
 }
 
-//var_dump(isset($_SESSION['is_logged']) && isset($_SESSION['username']));
-if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
+//var_dump(empty($_SESSION['is_logged']) && empty($_SESSION['username']));
+if (empty($_SESSION['is_logged']) && empty($_SESSION['username'])) {
 
     $userTodos = $todos[$_SESSION['username']]['todos'];
 
@@ -34,7 +34,7 @@ if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
 
     <body>
         <?php
-        if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
+        if (empty($_SESSION['is_logged']) && empty($_SESSION['username'])) {
             echo "<a href=\"logout.php\">Logout</a>";
         }
 
@@ -54,7 +54,7 @@ if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
                         <input type="hidden" name="todo_name" value="<?php echo $todoName ?>">
                         <input type="checkbox" name="status" value="1" <?php echo ($todo['completed'] ? 'checked' : '') ?>>
                         <?php echo $todoName ?>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam cum impedit assumenda ipsum nostrum doloremque quia. Eaque labore nisi, deserunt quibusdam, non voluptates hic voluptatem est excepturi illo perferendis commodi?</p>
+                        <p></p>
                     </form>
                     <form style="display: inline" action="delete.php" method="post">
                         <input type="hidden" name="todo_name" value="<?php echo $todoName ?>">

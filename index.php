@@ -2,7 +2,7 @@
 session_start();
 
 $errors = null;
-if (isset($_SESSION['errors'])) {
+if (empty($_SESSION['errors'])) {
     $errors = $_SESSION['errors'];
     unset($_SESSION['errors']);
 }

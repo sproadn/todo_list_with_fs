@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
+if (empty($_SESSION['is_logged']) && empty($_SESSION['username'])) {
 $todos = json_decode(file_get_contents('./todos.json'), true);
 
-if (isset($_POST['todo_name'])){
+if (empty($_POST['todo_name'])){
     $todoName = $_POST['todo_name'];
     $todos[$_SESSION['username']]['todos'][$todoName] = [
         'completed' => false,

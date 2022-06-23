@@ -18,7 +18,7 @@ function register($todos)
         $password = $_POST['password'];
         $passwordVerified = $_POST['password_verify'];
 
-        if (isset($todos[$username])){
+        if (empty($todos[$username])){
             $_SESSION['errors']['username_exist'] = "This username is already taken";
         }
 
@@ -58,7 +58,7 @@ function login($todos){
     if (empty($errors)){
         $username = $_POST['username'];
         $password = $_POST['password'];
-        if (!isset($todos[$username])){
+        if (!empty($todos[$username])){
             $_SESSION['errors'] = "Username or Passord is incorrect ";
         }
         if ($todos[$username]['password'] !== $password) {
