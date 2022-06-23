@@ -22,7 +22,11 @@ if (isset($_SESSION['errors'])) {
         <form action="todos_list.php" method="post">
             <?php 
                 if(!empty($errors)) {
-                    echo $errors."<br>";
+                    if (is_array($errors)) {
+                        echo implode("", $errors);
+                    } else {
+                        echo $errors . "<br>";
+                    }
                 }
             ?>
             <input type="text" name="username" placeholder="Username"><br>

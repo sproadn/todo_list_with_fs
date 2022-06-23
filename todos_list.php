@@ -8,7 +8,7 @@ $errors = [];
 
 if (isset($_POST['register_btn'])) {
     $todos = register($todos);
-    file_put_contents('./todos.json', json_encode($todos, JSON_PRETTY_PRINT));
+    file_put_contents('./todosb.json', json_encode($todos, JSON_PRETTY_PRINT));
 
 }
 if (isset($_POST['login_btn'])) {
@@ -56,7 +56,7 @@ $userTodos = $todos[$_SESSION['username']]['todos'];
           <button>Delete</button>
         </form>
       </div>
-    <?php endforeach;?>
+    <?php endforeach; ?>
 </div>
 
 <script>
