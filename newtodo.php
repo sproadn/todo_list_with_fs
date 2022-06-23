@@ -4,7 +4,6 @@ session_start();
 if (isset($_SESSION['is_logged']) && isset($_SESSION['username'])) {
 $todos = json_decode(file_get_contents('./todos.json'), true);
 
-var_dump($_POST); //die();
 if (isset($_POST['todo_name'])){
     $todoName = $_POST['todo_name'];
     $todos[$_SESSION['username']]['todos'][$todoName] = [
